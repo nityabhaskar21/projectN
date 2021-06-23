@@ -1,6 +1,6 @@
 package com.projectN.app.api;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +29,7 @@ public class BlogController {
 	
 	@GetMapping("/")
 	public ResponseEntity<?> listAllApi() {
-		Map<String, String> apiMap = new HashMap<>();
+		Map<String, String> apiMap = new LinkedHashMap<>();
 		apiMap.put("GET all posts", "/posts");
 		apiMap.put("GET post by ID", "/posts/{id}");
 		apiMap.put("POST a post", "/posts");
