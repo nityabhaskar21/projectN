@@ -1,6 +1,8 @@
 package com.projectN.app.api;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.ConstraintViolationException;
 
@@ -24,6 +26,19 @@ public class BlogController {
 	
 	@Autowired
 	private BlogService blogService;
+	
+	@GetMapping("/")
+	public ResponseEntity<?> listAllApi() {
+		Map<String, String> apiMap = new HashMap<>();
+		apiMap.put("GET all posts", "/posts");
+		apiMap.put("GET post by ID", "/posts/{id}");
+		apiMap.put("POST a post", "/posts");
+		apiMap.put("PUT a post by ID", "/posts/{id}");
+		apiMap.put("DELETE a post by ID", "/posts/{id}");
+		
+		return new ResponseEntity<>(apiMap, HttpStatus.OK);
+
+	}
 	
 	@GetMapping("/posts")
 	public ResponseEntity<?> getAllPosts() {
