@@ -62,6 +62,8 @@ public class BlogServiceImpl implements BlogService {
 			postToUpdate.setTitle(post.getTitle());
 			postToUpdate.setAuthor(post.getAuthor());
 			postToUpdate.setTags(post.getTags());
+			postToUpdate.setCategory(post.getCategory());
+			postToUpdate.setDescription(post.getDescription());
 			postToUpdate.setContent(post.getContent());
 			postToUpdate.setUpdatedAt(LocalDateTime.now());
 			

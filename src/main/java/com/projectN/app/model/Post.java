@@ -19,6 +19,12 @@ public class Post {
 	@NotNull(message= "Title cannot be null")
 	private String title;
 	
+	@NotNull(message= "Description cannot be null")
+	private String description;
+	
+	@NotNull(message= "Category cannot be null")
+	private String category;
+	
 	@NotNull(message= "Tags cannot be null")
 	private List<String> tags;
 	
