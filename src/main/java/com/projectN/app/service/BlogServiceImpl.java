@@ -48,7 +48,7 @@ public class BlogServiceImpl implements BlogService {
 	public Post getSinglePost(String id) throws BlogCollectionException {
 		Optional<Post> optionalPost =  blogRepo.findById(id);
 		if (!optionalPost.isPresent()) {
-			throw new BlogCollectionException(BlogCollectionException.NotFoundException(id));
+			throw new BlogCollectionException(BlogCollectionException.PostNotFoundException(id));
 		} else {
 			return optionalPost.get();
 		}
@@ -70,7 +70,7 @@ public class BlogServiceImpl implements BlogService {
 			blogRepo.save(postToUpdate);
 			
 		} else {
-			throw new BlogCollectionException(BlogCollectionException.NotFoundException(id));
+			throw new BlogCollectionException(BlogCollectionException.PostNotFoundException(id));
 		}
 		
 	}
@@ -79,7 +79,7 @@ public class BlogServiceImpl implements BlogService {
 	public void deletePostById(String id) throws BlogCollectionException {
 		Optional<Post> postOptional = blogRepo.findById(id);
 		if (!postOptional.isPresent()) {
-			throw new BlogCollectionException(BlogCollectionException.NotFoundException(id));
+			throw new BlogCollectionException(BlogCollectionException.PostNotFoundException(id));
 		} else {
 			blogRepo.deleteById(id);
 		}

@@ -31,6 +31,9 @@ public class Post {
 	@NotNull(message= "Author cannot be null")
 	private String author;
 	
+	@NotNull(message= "Username cannot be null")
+	private String username;
+	
 	private LocalDateTime createdAt;
 	
 	private LocalDateTime updatedAt;
@@ -47,6 +50,5 @@ public class Post {
 		this.createdAt = LocalDateTime.now();
 		this.updatedAt = LocalDateTime.now();
 	}
-	
 	
 }
