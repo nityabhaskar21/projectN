@@ -11,7 +11,7 @@ public class BlogCollectionException extends Exception {
 		super(message);
 	}
 	
-	public static String NotFoundException(String id) {
+	public static String PostNotFoundException(String id) {
 		return "Post with ID: "+ id +" not found!";
 	}
 	
