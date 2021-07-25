@@ -29,6 +29,7 @@ public class UserServiceImpl implements UserService{
 		} else {
 			user.setCreatedAt(LocalDateTime.now());
 			user.setUpdatedAt(LocalDateTime.now());
+			user.setPosts(new ArrayList<>());
 			userRepo.save(user);
 		}
 		
@@ -65,7 +66,9 @@ public class UserServiceImpl implements UserService{
 			userToUpdate.setPassword(user.getPassword());
 			userToUpdate.setEmail(user.getEmail());
 			userToUpdate.setAbout(user.getAbout());
+			userToUpdate.setPosts(user.getPosts());
 			userToUpdate.setUpdatedAt(LocalDateTime.now());
+			userRepo.save(userToUpdate);
 		} else {
 			throw new UserCollectionException(UserCollectionException.UserNotFoundException(id));
 		}
@@ -81,6 +84,29 @@ public class UserServiceImpl implements UserService{
 			userRepo.deleteById(id);		
 		}
 		
+	}
+
+	@Override
+	public User getUserByUsername(String username) throws UserCollectionException {
+		Optional<User> optionalUser = userRepo.findUserByUsername(username);
+		if (!optionalUser.isPresent()) {
+			throw new UserCollectionException(UserCollectionException.UserNotFoundException(username));
+		} else {
+			return optionalUser.get();		
+		}
+	}
+
+	@Override
+	public void updateUserByUsername(String username, User user) throws UserCollectionException {
+		User userToUpdate = getUserByUsername(username);
+		userToUpdate.setFirstname(user.getFirstname());
+		userToUpdate.setLastname(user.getLastname());
+		userToUpdate.setPassword(user.getPassword());
+		userToUpdate.setEmail(user.getEmail());
+		userToUpdate.setAbout(user.getAbout());
+		userToUpdate.setPosts(user.getPosts());
+		userToUpdate.setUpdatedAt(LocalDateTime.now());
+		userRepo.save(userToUpdate);
 	}
 
 }

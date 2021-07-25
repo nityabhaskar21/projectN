@@ -7,6 +7,9 @@ import javax.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,14 +19,28 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projectN.app.exception.UserCollectionException;
+import com.projectN.app.model.AuthenticationRequest;
+import com.projectN.app.model.AuthenticationResponse;
 import com.projectN.app.model.User;
+import com.projectN.app.service.CustomUserDetailsService;
 import com.projectN.app.service.UserService;
+import com.projectN.app.util.JwtUtil;
+
 
 @RestController
 public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private JwtUtil jwtUtil;
+	
+	@Autowired
+	private AuthenticationManager authenticationManager;
+	
+	@Autowired
+	private CustomUserDetailsService customUserDetailsService;
 	
 	@GetMapping("/users")
 	public ResponseEntity<?> getAllUsers() {
@@ -80,5 +97,21 @@ public class UserController {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	@PostMapping("/authenticate")
+    public ResponseEntity<?> generateToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
+                    		authenticationRequest.getPassword())
+            );
+        } catch (Exception ex) {
+            return new ResponseEntity<>("inavalid username/password", HttpStatus.NOT_FOUND);
+        }
+        UserDetails userDetails = customUserDetailsService
+        							.loadUserByUsername(authenticationRequest.getUsername());
+        String jwt =  jwtUtil.generateToken(userDetails);
+        return new ResponseEntity<>(new AuthenticationResponse(jwt), HttpStatus.OK);
+    }
 
 }

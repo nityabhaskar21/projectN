@@ -32,7 +32,7 @@ public class Post {
 	private String author;
 	
 	@NotNull(message= "Username cannot be null")
-	private String username;
+	private String username = "default";
 	
 	private LocalDateTime createdAt;
 	

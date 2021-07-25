@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projectN.app.exception.BlogCollectionException;
+import com.projectN.app.exception.UserCollectionException;
 import com.projectN.app.model.Post;
 import com.projectN.app.service.BlogService;
 
@@ -51,7 +52,7 @@ public class BlogController {
 	}
 	
 	@PostMapping("/posts")
-	public ResponseEntity<?> createPost(@RequestBody Post post) {
+	public ResponseEntity<?> createPost(@RequestBody Post post) throws UserCollectionException {
 		try {
 			blogService.createPost(post);
 			return new ResponseEntity<Post>(post, HttpStatus.OK);
@@ -74,7 +75,7 @@ public class BlogController {
 	
 	@PutMapping("/posts/{id}")
 	public ResponseEntity<?> updatePostById(@PathVariable("id") String id,
-			@RequestBody Post post) {
+			@RequestBody Post post) throws UserCollectionException {
 		try {
 			blogService.updatePost(id, post);
 			return new ResponseEntity<>("Update post with ID: " + id + " complete!", HttpStatus.OK);
@@ -87,7 +88,7 @@ public class BlogController {
 	}
 	
 	@DeleteMapping("/posts/{id}")
-	public ResponseEntity<?> deleteById(@PathVariable("id") String id) {
+	public ResponseEntity<?> deleteById(@PathVariable("id") String id) throws UserCollectionException {
 		try {
 			blogService.deletePostById(id);
 			return new ResponseEntity<>("Successfully deleted post with ID: " + id,
