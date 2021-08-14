@@ -31,9 +31,9 @@ public class ProjectNApplication {
 		corsConfiguration.setExposedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Authorization",
 				"Access-Control-Allow-Origin", "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials"));
 		corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-		corsConfiguration.addAllowedHeader("*");
-		corsConfiguration.addExposedHeader("*");
-		corsConfiguration.addAllowedMethod("*");
+//		corsConfiguration.addAllowedHeader("*");
+//		corsConfiguration.addExposedHeader("*");
+//		corsConfiguration.addAllowedMethod("*");
 		
 		UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
 		urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
