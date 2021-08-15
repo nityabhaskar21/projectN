@@ -64,7 +64,7 @@ public class UserController {
 		 }
 	}
 	
-	@GetMapping("/users/{id}")
+	@GetMapping("/users/id/{id}")
 	public ResponseEntity<?> getSingleUserById(@PathVariable("id") String id) {
 		try {
 			User singleUser = userService.getSingleUser(id);
@@ -90,6 +90,19 @@ public class UserController {
 		try {
 			userService.updateUser(id, user);
 			return new ResponseEntity<>("Update user with ID: " + id + " complete!", HttpStatus.OK);
+		} catch (ConstraintViolationException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+		} catch (UserCollectionException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PutMapping("/users/username/{username}")
+	public ResponseEntity<?> updateUserByUsername(@PathVariable("username") String username,
+			@RequestBody User user) {
+		try {
+			userService.updateUserByUsername(username, user);
+			return new ResponseEntity<>("Update user with username: " +username+ " complete!", HttpStatus.OK);
 		} catch (ConstraintViolationException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
 		} catch (UserCollectionException e) {
