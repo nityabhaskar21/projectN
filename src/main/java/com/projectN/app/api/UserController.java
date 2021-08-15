@@ -65,9 +65,19 @@ public class UserController {
 	}
 	
 	@GetMapping("/users/{id}")
-	public ResponseEntity<?> getSinglePost(@PathVariable("id") String id) {
+	public ResponseEntity<?> getSingleUserById(@PathVariable("id") String id) {
 		try {
 			User singleUser = userService.getSingleUser(id);
+			return new ResponseEntity<>(singleUser, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@GetMapping("/users/{username}")
+	public ResponseEntity<?> getSingleUserByUsername(@PathVariable("username") String username) {
+		try {
+			User singleUser = userService.getUserByUsername(username);
 			return new ResponseEntity<>(singleUser, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
