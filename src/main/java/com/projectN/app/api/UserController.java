@@ -74,7 +74,7 @@ public class UserController {
 		}
 	}
 	
-	@GetMapping("/users/{username}")
+	@GetMapping("/users/username/{username}")
 	public ResponseEntity<?> getSingleUserByUsername(@PathVariable("username") String username) {
 		try {
 			User singleUser = userService.getUserByUsername(username);
@@ -84,7 +84,7 @@ public class UserController {
 		}
 	}
 	
-	@PutMapping("/users/{id}")
+	@PutMapping("/users/id/{id}")
 	public ResponseEntity<?> updateUserById(@PathVariable("id") String id,
 			@RequestBody User user) {
 		try {
