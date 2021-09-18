@@ -1,5 +1,6 @@
 package com.projectN.app.api;
 
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,7 +61,7 @@ public class BlogController {
 			@RequestParam(value = "pagesize", defaultValue = "2") int pageSize) {
 		Map<String, Object> posts = blogService.getAllPostsInPage(pageNo, pageSize);
 		if (posts.size() > 0) {
-			return new ResponseEntity<List<Post>>((List<Post>) posts.getOrDefault(DATA, List.of()), HttpStatus.OK);
+			return new ResponseEntity<List<Post>>((List<Post>) posts.getOrDefault(DATA, Arrays.asList()), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>("No posts available", HttpStatus.NOT_FOUND);
 		}
