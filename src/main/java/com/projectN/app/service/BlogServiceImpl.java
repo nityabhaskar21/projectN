@@ -2,13 +2,20 @@ package com.projectN.app.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.IntStream;
+
+import static com.projectN.app.util.Constants.DATA;
 
 import javax.validation.ConstraintViolationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.projectN.app.exception.BlogCollectionException;
@@ -126,5 +133,19 @@ public class BlogServiceImpl implements BlogService {
 			}
 		}
 	}
+
+	@Override
+	public Map<String, Object> getAllPostsInPage(int pageNo, int pageSize) {
+		Map<String, Object> response = new HashMap<>();
+		Pageable page = PageRequest.of(pageNo, pageSize);
+		Page<Post> blogPage =  blogRepo.findAll(page);
+		response.put(DATA, blogPage.getContent());
+		response.put("Total no of pages", blogPage.getTotalPages());
+		response.put("Total no of elements", blogPage.getTotalElements());
+		response.put("Total no of elements in current page", blogPage.getNumberOfElements());
+		response.put("Current page", blogPage.getNumber());
+		return response;
+	}
+
 	
 }
