@@ -9,6 +9,10 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 import static com.projectN.app.util.Constants.DATA;
+import static com.projectN.app.util.Constants.TOTAL_NO_OF_ELEMENTS;
+import static com.projectN.app.util.Constants.TOTAL_NO_OF_ELEMENTS_IN_CURRENT_PAGE;
+import static com.projectN.app.util.Constants.CURRENT_PAGE;
+import static com.projectN.app.util.Constants.TOTAL_NO_OF_PAGES;
 
 import javax.validation.ConstraintViolationException;
 
@@ -140,10 +144,10 @@ public class BlogServiceImpl implements BlogService {
 		Pageable page = PageRequest.of(pageNo, pageSize);
 		Page<Post> blogPage =  blogRepo.findAll(page);
 		response.put(DATA, blogPage.getContent());
-		response.put("Total no of pages", blogPage.getTotalPages());
-		response.put("Total no of elements", blogPage.getTotalElements());
-		response.put("Total no of elements in current page", blogPage.getNumberOfElements());
-		response.put("Current page", blogPage.getNumber());
+		response.put(TOTAL_NO_OF_PAGES, blogPage.getTotalPages());
+		response.put(TOTAL_NO_OF_ELEMENTS, blogPage.getTotalElements());
+		response.put(TOTAL_NO_OF_ELEMENTS_IN_CURRENT_PAGE, blogPage.getNumberOfElements());
+		response.put(CURRENT_PAGE, blogPage.getNumber());
 		return response;
 	}
 
