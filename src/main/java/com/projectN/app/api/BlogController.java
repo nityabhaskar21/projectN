@@ -55,13 +55,12 @@ public class BlogController {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@GetMapping("/posts/page")
 	public ResponseEntity<?> getAllPostsByPage(@RequestParam(value = "pageno", defaultValue = "0") int pageNo,
 			@RequestParam(value = "pagesize", defaultValue = "2") int pageSize) {
 		Map<String, Object> posts = blogService.getAllPostsInPage(pageNo, pageSize);
 		if (posts.size() > 0) {
-			return new ResponseEntity<List<Post>>((List<Post>) posts.getOrDefault(DATA, Arrays.asList()), HttpStatus.OK);
+			return new ResponseEntity<>(posts, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>("No posts available", HttpStatus.NOT_FOUND);
 		}
